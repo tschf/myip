@@ -1,0 +1,15 @@
+#!/bin/bash
+# myip
+# Author: Trent Schafer
+# Purpose: Print the current public/WAN IP address
+# Implementation taken from answers at: https://unix.stackexchange.com/questions/22615/how-can-i-get-my-external-ip-address-in-a-shell-script/81699#81699
+
+# First, try the DNS lookup
+IP_ADD=$(dig +short myip.opendns.com @resolver1.opendns.com)
+if [[ ! -z ${IP_ADD} ]]; then
+    echo ${IP_ADD}
+else
+    # Otherwise, look it up over HTTP
+    IP_ADD=$(curl -s http://whatismyip.akamai.com/)
+    echo ${IP_ADD}
+fi
